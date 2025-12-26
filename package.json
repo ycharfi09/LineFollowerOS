@@ -1,0 +1,28 @@
+{
+  "name": "line-follower-os",
+  "version": "1.0.0",
+  "description": "A web-based track & robot builder that generates ready-to-flash firmware for competition line follower robots",
+  "private": true,
+  "workspaces": [
+    "frontend"
+  ],
+  "scripts": {
+    "frontend": "cd frontend && npm start",
+    "frontend:build": "cd frontend && npm run build",
+    "backend": "cd backend && python -m uvicorn src.main:app --reload",
+    "backend:install": "cd backend && pip install -r requirements.txt",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "install:all": "npm install && npm run backend:install"
+  },
+  "keywords": [
+    "line-follower",
+    "robot",
+    "firmware",
+    "competition"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
