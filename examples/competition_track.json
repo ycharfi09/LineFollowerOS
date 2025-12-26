@@ -1,0 +1,75 @@
+{
+  "name": "Competition Track with Fork",
+  "elements": [
+    {
+      "id": "start-1",
+      "type": "start",
+      "position": {"x": 100, "y": 300},
+      "rotation": 0,
+      "width": 50,
+      "connections": ["straight-1"]
+    },
+    {
+      "id": "straight-1",
+      "type": "straight",
+      "position": {"x": 200, "y": 300},
+      "rotation": 0,
+      "width": 50,
+      "length": 150,
+      "connections": ["fork-1"]
+    },
+    {
+      "id": "fork-1",
+      "type": "fork",
+      "position": {"x": 350, "y": 300},
+      "rotation": 0,
+      "width": 50,
+      "connections": ["path-left", "path-right"]
+    },
+    {
+      "id": "path-left",
+      "type": "curve",
+      "position": {"x": 400, "y": 250},
+      "rotation": 45,
+      "width": 50,
+      "radius": 80,
+      "connections": ["merge-1"]
+    },
+    {
+      "id": "path-right",
+      "type": "forbidden_path",
+      "position": {"x": 400, "y": 350},
+      "rotation": 0,
+      "width": 50,
+      "length": 100,
+      "connections": ["merge-1"]
+    },
+    {
+      "id": "merge-1",
+      "type": "straight",
+      "position": {"x": 500, "y": 300},
+      "rotation": 0,
+      "width": 50,
+      "length": 100,
+      "connections": ["obstacle-1"]
+    },
+    {
+      "id": "obstacle-1",
+      "type": "obstacle",
+      "position": {"x": 600, "y": 300},
+      "rotation": 0,
+      "width": 40,
+      "connections": ["end-1"]
+    },
+    {
+      "id": "end-1",
+      "type": "end",
+      "position": {"x": 700, "y": 300},
+      "rotation": 0,
+      "width": 50,
+      "connections": []
+    }
+  ],
+  "width": 800,
+  "height": 600
+}
