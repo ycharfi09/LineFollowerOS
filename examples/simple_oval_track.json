@@ -1,0 +1,86 @@
+{
+  "name": "Simple Oval Track",
+  "elements": [
+    {
+      "id": "start-1",
+      "type": "start",
+      "position": {"x": 100, "y": 300},
+      "rotation": 0,
+      "width": 50,
+      "connections": ["straight-1"]
+    },
+    {
+      "id": "straight-1",
+      "type": "straight",
+      "position": {"x": 250, "y": 300},
+      "rotation": 0,
+      "width": 50,
+      "length": 200,
+      "connections": ["curve-1"]
+    },
+    {
+      "id": "curve-1",
+      "type": "curve",
+      "position": {"x": 450, "y": 300},
+      "rotation": 0,
+      "width": 50,
+      "radius": 100,
+      "connections": ["straight-2"]
+    },
+    {
+      "id": "straight-2",
+      "type": "straight",
+      "position": {"x": 550, "y": 200},
+      "rotation": 90,
+      "width": 50,
+      "length": 200,
+      "connections": ["curve-2"]
+    },
+    {
+      "id": "curve-2",
+      "type": "curve",
+      "position": {"x": 550, "y": 100},
+      "rotation": 90,
+      "width": 50,
+      "radius": 100,
+      "connections": ["straight-3"]
+    },
+    {
+      "id": "straight-3",
+      "type": "straight",
+      "position": {"x": 450, "y": 100},
+      "rotation": 180,
+      "width": 50,
+      "length": 200,
+      "connections": ["curve-3"]
+    },
+    {
+      "id": "curve-3",
+      "type": "curve",
+      "position": {"x": 250, "y": 100},
+      "rotation": 180,
+      "width": 50,
+      "radius": 100,
+      "connections": ["straight-4"]
+    },
+    {
+      "id": "straight-4",
+      "type": "straight",
+      "position": {"x": 150, "y": 200},
+      "rotation": 270,
+      "width": 50,
+      "length": 100,
+      "connections": ["end-1"]
+    },
+    {
+      "id": "end-1",
+      "type": "end",
+      "position": {"x": 150, "y": 280},
+      "rotation": 0,
+      "width": 50,
+      "connections": []
+    }
+  ],
+  "width": 800,
+  "height": 600
+}

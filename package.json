@@ -1,0 +1,49 @@
+{
+  "name": "line-follower-os",
+  "version": "1.0.0",
+  "description": "A web-based track & robot builder that generates ready-to-flash firmware for competition line follower robots",
+  "private": true,
+  "workspaces": [
+    "frontend"
+  ],
+  "scripts": {
+    "frontend": "cd frontend && npm start",
+    "frontend:build": "cd frontend && npm run build",
+    "frontend:test": "cd frontend && npm test",
+    "backend": "cd backend && python -m uvicorn src.main:app --reload --host 0.0.0.0 --port 8000",
+    "backend:install": "cd backend && pip install -r requirements.txt",
+    "backend:test": "cd backend && pytest",
+    "dev": "concurrently --kill-others \"npm run backend\" \"npm run frontend\"",
+    "install:all": "npm install && npm run backend:install",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:build": "docker-compose build",
+    "docker:logs": "docker-compose logs -f",
+    "lint:frontend": "cd frontend && npm run lint",
+    "format:backend": "cd backend && black src/ && isort src/",
+    "clean": "rm -rf frontend/build backend/__pycache__ backend/**/__pycache__ node_modules frontend/node_modules"
+  },
+  "keywords": [
+    "line-follower",
+    "robot",
+    "firmware",
+    "competition",
+    "arduino",
+    "teensy",
+    "robotics",
+    "pid-controller"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ycharfi09/LineFollowerOS.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ycharfi09/LineFollowerOS/issues"
+  },
+  "homepage": "https://github.com/ycharfi09/LineFollowerOS#readme",
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
