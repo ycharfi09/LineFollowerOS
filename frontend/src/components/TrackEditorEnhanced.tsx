@@ -30,6 +30,7 @@ const TrackEditorEnhanced: React.FC<TrackEditorEnhancedProps> = ({
 
   useEffect(() => {
     drawCanvas();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [elements, selectedElement, scale, offset, drawingPoints, showGrid]);
 
   const transformPoint = (x: number, y: number): Point => {

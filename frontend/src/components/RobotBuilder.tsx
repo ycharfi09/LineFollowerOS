@@ -11,11 +11,10 @@ const RobotBuilder: React.FC<RobotBuilderProps> = ({ robot, onRobotChange }) => 
     onRobotChange({ ...robot, ...updates });
   };
 
-  const updateMotor = (side: 'left' | 'right', updates: Partial<MotorConfig>) => {
-    const motorKey = side === 'left' ? 'motor_left' : 'motor_right';
-    updateRobot({
-      [motorKey]: { ...robot[motorKey], ...updates }
-    });
+  const updateMotor = (index: number, updates: Partial<MotorConfig>) => {
+    const newMotors = [...robot.motors];
+    newMotors[index] = { ...newMotors[index], ...updates };
+    updateRobot({ motors: newMotors });
   };
 
   const updateWheels = (updates: Partial<WheelConfig>) => {
@@ -32,7 +31,8 @@ const RobotBuilder: React.FC<RobotBuilderProps> = ({ robot, onRobotChange }) => 
 
   return (
     <div style={{ padding: '20px', background: '#fff', border: '1px solid #ccc', borderRadius: '8px' }}>
-      <h2>Robot Builder</h2>
+      <h2>Robot Builder (Legacy)</h2>
+      <p style={{ color: '#666', fontSize: '14px' }}>This is the legacy robot builder. Please use the enhanced version from the Robot tab.</p>
       
       {/* Robot Name */}
       <div style={{ marginBottom: '20px' }}>
@@ -66,26 +66,18 @@ const RobotBuilder: React.FC<RobotBuilderProps> = ({ robot, onRobotChange }) => 
       <div style={{ marginBottom: '20px' }}>
         <h3>Motors</h3>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-          <div>
-            <h4>Left Motor</h4>
-            <label>Max RPM:</label>
-            <input
-              type="number"
-              value={robot.motor_left.max_rpm}
-              onChange={e => updateMotor('left', { max_rpm: parseInt(e.target.value) })}
-              style={{ width: '100%', padding: '4px', marginBottom: '5px' }}
-            />
-          </div>
-          <div>
-            <h4>Right Motor</h4>
-            <label>Max RPM:</label>
-            <input
-              type="number"
-              value={robot.motor_right.max_rpm}
-              onChange={e => updateMotor('right', { max_rpm: parseInt(e.target.value) })}
-              style={{ width: '100%', padding: '4px', marginBottom: '5px' }}
-            />
-          </div>
+          {robot.motors.slice(0, 2).map((motor, index) => (
+            <div key={index}>
+              <h4>{motor.position} Motor</h4>
+              <label>Max RPM:</label>
+              <input
+                type="number"
+                value={motor.max_rpm}
+                onChange={e => updateMotor(index, { max_rpm: parseInt(e.target.value) })}
+                style={{ width: '100%', padding: '4px', marginBottom: '5px' }}
+              />
+            </div>
+          ))}
         </div>
       </div>
 

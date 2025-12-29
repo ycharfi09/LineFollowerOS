@@ -36,6 +36,7 @@ const TestFirmwareSimulator: React.FC<TestFirmwareSimulatorProps> = ({ robot, tr
 
   useEffect(() => {
     drawSimulation();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [simState, track]);
 
   useEffect(() => {
@@ -49,6 +50,7 @@ const TestFirmwareSimulator: React.FC<TestFirmwareSimulatorProps> = ({ robot, tr
         cancelAnimationFrame(animationRef.current);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [simState.isRunning]);
 
   const drawSimulation = () => {
@@ -157,7 +159,8 @@ const TestFirmwareSimulator: React.FC<TestFirmwareSimulatorProps> = ({ robot, tr
     for (let i = 0; i < robot.sensors.count; i++) {
       const sensorX = -20 + i * sensorSpacing;
       const worldX = position.x + sensorX * Math.cos(angle) - (-35) * Math.sin(angle);
-      const worldY = position.y + sensorX * Math.sin(angle) + (-35) * Math.cos(angle);
+      // worldY is calculated but not used in this simplified simulation
+      // const worldY = position.y + sensorX * Math.sin(angle) + (-35) * Math.cos(angle);
       
       // Simple line detection: check if near x=400 (vertical line)
       const distanceFromLine = Math.abs(worldX - 400);

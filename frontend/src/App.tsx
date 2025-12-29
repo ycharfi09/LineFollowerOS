@@ -5,7 +5,7 @@ import RobotBuilderEnhanced from './components/RobotBuilderEnhanced';
 import RobotVisualizer from './components/RobotVisualizer';
 import TestFirmwareSimulator from './components/TestFirmwareSimulator';
 import FirmwareGenerator from './components/FirmwareGenerator';
-import { Track, RobotConfig, TrackElement, ElementType } from './types';
+import { Track, RobotConfig, TrackElement } from './types';
 
 function App() {
   const [track, setTrack] = useState<Track>({

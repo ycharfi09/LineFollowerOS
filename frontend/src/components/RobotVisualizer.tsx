@@ -10,6 +10,7 @@ const RobotVisualizer: React.FC<RobotVisualizerProps> = ({ robot }) => {
 
   useEffect(() => {
     drawRobot();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [robot]);
 
   const drawRobot = () => {
