@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import './App.css';
-import TrackEditor from './components/TrackEditor';
-import RobotBuilder from './components/RobotBuilder';
+import TrackEditorEnhanced from './components/TrackEditorEnhanced';
+import RobotBuilderEnhanced from './components/RobotBuilderEnhanced';
+import RobotVisualizer from './components/RobotVisualizer';
+import TestFirmwareSimulator from './components/TestFirmwareSimulator';
 import FirmwareGenerator from './components/FirmwareGenerator';
 import { Track, RobotConfig, TrackElement, ElementType } from './types';
 
@@ -15,16 +17,22 @@ function App() {
 
   const [robot, setRobot] = useState<RobotConfig>({
     name: 'My Robot',
-    motor_left: {
-      type: 'DC',
-      max_rpm: 200,
-      pins: [9, 10]
-    },
-    motor_right: {
-      type: 'DC',
-      max_rpm: 200,
-      pins: [5, 6]
-    },
+    mcu_board: 'Arduino Uno',
+    motors: [
+      {
+        type: 'DC',
+        max_rpm: 200,
+        pins: [9, 10],
+        position: 'left'
+      },
+      {
+        type: 'DC',
+        max_rpm: 200,
+        pins: [5, 6],
+        position: 'right'
+      }
+    ],
+    encoders: [],
     wheels: {
       diameter: 65.0,
       width: 20.0
@@ -35,6 +43,9 @@ function App() {
       spacing: 10.0,
       pins: [0, 1, 2, 3, 4, 5, 6, 7]
     },
+    ultrasonics: [],
+    color_sensors: [],
+    displays: [],
     pid: {
       kp: 1.0,
       ki: 0.0,
@@ -45,7 +56,7 @@ function App() {
     platform: 'arduino'
   });
 
-  const [activeTab, setActiveTab] = useState<'track' | 'robot' | 'firmware'>('track');
+  const [activeTab, setActiveTab] = useState<'track' | 'robot' | 'firmware' | 'test'>('track');
 
   const handleElementsChange = (elements: TrackElement[]) => {
     setTrack({ ...track, elements });
@@ -62,7 +73,7 @@ function App() {
       }}>
         <h1 style={{ margin: 0, fontSize: '32px' }}>LineFollowerOS</h1>
         <p style={{ margin: '10px 0 0', fontSize: '16px' }}>
-          Web-based Track & Robot Builder - Generate Ready-to-Flash Firmware
+          Enhanced Web-based Track & Robot Builder - Generate Ready-to-Flash Firmware
         </p>
       </header>
 
@@ -75,7 +86,7 @@ function App() {
         borderBottom: '2px solid #ddd',
         padding: '0'
       }}>
-        {(['track', 'robot', 'firmware'] as const).map(tab => (
+        {(['track', 'robot', 'test', 'firmware'] as const).map(tab => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
@@ -91,7 +102,10 @@ function App() {
               textTransform: 'capitalize'
             }}
           >
-            {tab} {tab === 'track' ? '🏁' : tab === 'robot' ? '🤖' : '⚙️'}
+            {tab === 'track' ? '🏁 Track' : 
+             tab === 'robot' ? '🤖 Robot' : 
+             tab === 'test' ? '🧪 Test' :
+             '⚙️ Firmware'}
           </button>
         ))}
       </div>
@@ -118,7 +132,7 @@ function App() {
                 Elements: {track.elements.length}
               </div>
             </div>
-            <TrackEditor
+            <TrackEditorEnhanced
               elements={track.elements}
               onElementsChange={handleElementsChange}
               width={track.width}
@@ -128,7 +142,18 @@ function App() {
         )}
 
         {activeTab === 'robot' && (
-          <RobotBuilder robot={robot} onRobotChange={setRobot} />
+          <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+            <div style={{ flex: '1 1 600px' }}>
+              <RobotBuilderEnhanced robot={robot} onRobotChange={setRobot} />
+            </div>
+            <div style={{ flex: '0 0 400px' }}>
+              <RobotVisualizer robot={robot} />
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'test' && (
+          <TestFirmwareSimulator robot={robot} track={track} />
         )}
 
         {activeTab === 'firmware' && (
@@ -145,7 +170,7 @@ function App() {
         borderTop: '1px solid #ddd'
       }}>
         <p style={{ margin: 0, color: '#666' }}>
-          LineFollowerOS v1.0.0 - Built for Competition Line Follower Robots
+          LineFollowerOS v1.0.0 - Enhanced with Advanced Features - Built for Competition Line Follower Robots
         </p>
       </footer>
     </div>

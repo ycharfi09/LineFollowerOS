@@ -9,7 +9,9 @@ export enum ElementType {
   FORBIDDEN_PATH = "forbidden_path",
   LOOP = "loop",
   COLOR_ZONE = "color_zone",
-  OBSTACLE = "obstacle"
+  OBSTACLE = "obstacle",
+  PATH = "path",
+  AREA_MARKER = "area_marker"
 }
 
 export interface Point {
@@ -27,6 +29,9 @@ export interface TrackElement {
   radius?: number;
   color?: string;
   connections: string[];
+  path_data?: string;
+  points?: Point[];
+  label?: string;
 }
 
 export interface Track {
@@ -34,12 +39,28 @@ export interface Track {
   elements: TrackElement[];
   width: number;
   height: number;
+  svg_import?: string;
 }
 
 export interface MotorConfig {
   type: string;
   max_rpm: number;
   pins: number[];
+  enable_pin?: number;
+  position: string;
+}
+
+export interface MotorDriverConfig {
+  type: string;
+  pins: number[];
+  enable_pins: number[];
+}
+
+export interface EncoderConfig {
+  type: string;
+  pin_a: number;
+  pin_b: number;
+  motor_index: number;
 }
 
 export interface WheelConfig {
@@ -54,6 +75,27 @@ export interface SensorConfig {
   pins: number[];
 }
 
+export interface UltrasonicConfig {
+  trigger_pin: number;
+  echo_pin: number;
+  position: string;
+}
+
+export interface ColorSensorConfig {
+  type: string;
+  sda_pin: number;
+  scl_pin: number;
+}
+
+export interface DisplayConfig {
+  type: string;
+  model: string;
+  sda_pin?: number;
+  scl_pin?: number;
+  width: number;
+  height: number;
+}
+
 export interface PIDConfig {
   kp: number;
   ki: number;
@@ -62,10 +104,15 @@ export interface PIDConfig {
 
 export interface RobotConfig {
   name: string;
-  motor_left: MotorConfig;
-  motor_right: MotorConfig;
+  mcu_board: string;
+  motors: MotorConfig[];
+  motor_driver?: MotorDriverConfig;
+  encoders: EncoderConfig[];
   wheels: WheelConfig;
   sensors: SensorConfig;
+  ultrasonics: UltrasonicConfig[];
+  color_sensors: ColorSensorConfig[];
+  displays: DisplayConfig[];
   pid: PIDConfig;
   base_speed: number;
   max_speed: number;

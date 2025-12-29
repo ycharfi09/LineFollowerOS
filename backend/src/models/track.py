@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import List, Optional, Literal
+from typing import List, Optional, Literal, Dict
 from enum import Enum
 
 class ElementType(str, Enum):
@@ -12,6 +12,8 @@ class ElementType(str, Enum):
     LOOP = "loop"
     COLOR_ZONE = "color_zone"
     OBSTACLE = "obstacle"
+    PATH = "path"  # SVG path
+    AREA_MARKER = "area_marker"  # Custom area marker
 
 class Point(BaseModel):
     x: float
@@ -27,12 +29,16 @@ class TrackElement(BaseModel):
     radius: Optional[float] = None
     color: Optional[str] = None
     connections: List[str] = Field(default_factory=list)
+    path_data: Optional[str] = None  # SVG path data
+    points: List[Point] = Field(default_factory=list)  # For polygons and custom shapes
+    label: Optional[str] = None  # For area markers
 
 class Track(BaseModel):
     name: str
     elements: List[TrackElement]
     width: int = 800
     height: int = 600
+    svg_import: Optional[str] = None  # Store original SVG if imported
     
 class TrackGraph(BaseModel):
     nodes: List[dict]
