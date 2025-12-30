@@ -8,6 +8,11 @@ interface TrackEditorEnhancedProps {
   height: number;
 }
 
+type Tool = 'select' | 'pan' | 'draw' | 'line';
+
+const OBSTACLE_LINE_WIDTH_MULTIPLIER = 2;
+const LINE_SELECTION_TOLERANCE = 10;
+
 const TrackEditorEnhanced: React.FC<TrackEditorEnhancedProps> = ({ 
   elements, 
   onElementsChange, 
@@ -15,7 +20,7 @@ const TrackEditorEnhanced: React.FC<TrackEditorEnhancedProps> = ({
   height 
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [selectedTool, setSelectedTool] = useState<'select' | 'pan' | 'draw' | 'line'>('select');
+  const [selectedTool, setSelectedTool] = useState<Tool>('select');
   const [selectedElement, setSelectedElement] = useState<string | null>(null);
   const [selectedLineType, setSelectedLineType] = useState<LineType>(LineType.NORMAL);
   const [lineWidth, setLineWidth] = useState(5);
@@ -171,7 +176,7 @@ const TrackEditorEnhanced: React.FC<TrackEditorEnhancedProps> = ({
           break;
         case LineType.OBSTACLE:
           ctx.strokeStyle = '#9E9E9E';
-          ctx.lineWidth = (lineWidth * 2) / scale;
+          ctx.lineWidth = (lineWidth * OBSTACLE_LINE_WIDTH_MULTIPLIER) / scale;
           break;
         default:
           ctx.strokeStyle = '#333';
@@ -298,7 +303,7 @@ const TrackEditorEnhanced: React.FC<TrackEditorEnhancedProps> = ({
             const p1 = el.points[i];
             const p2 = el.points[i + 1];
             const dist = distanceToLineSegment(point, p1, p2);
-            if (dist < 10) return true;
+            if (dist < LINE_SELECTION_TOLERANCE) return true;
           }
           return false;
         } else {
