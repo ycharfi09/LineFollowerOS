@@ -14,6 +14,15 @@ export enum ElementType {
   AREA_MARKER = "area_marker"
 }
 
+export enum LineType {
+  NORMAL = "normal",
+  START = "start",
+  END = "end",
+  FORBIDDEN = "forbidden",
+  COLOR_ZONE = "color_zone",
+  OBSTACLE = "obstacle"
+}
+
 export interface Point {
   x: number;
   y: number;
@@ -32,6 +41,8 @@ export interface TrackElement {
   path_data?: string;
   points?: Point[];
   label?: string;
+  lineType?: LineType;
+  lineWidth?: number;
 }
 
 export interface Track {

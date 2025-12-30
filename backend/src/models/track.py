@@ -15,6 +15,14 @@ class ElementType(str, Enum):
     PATH = "path"  # SVG path
     AREA_MARKER = "area_marker"  # Custom area marker
 
+class LineType(str, Enum):
+    NORMAL = "normal"
+    START = "start"
+    END = "end"
+    FORBIDDEN = "forbidden"
+    COLOR_ZONE = "color_zone"
+    OBSTACLE = "obstacle"
+
 class Point(BaseModel):
     x: float
     y: float
@@ -32,6 +40,8 @@ class TrackElement(BaseModel):
     path_data: Optional[str] = None  # SVG path data
     points: List[Point] = Field(default_factory=list)  # For polygons and custom shapes
     label: Optional[str] = None  # For area markers
+    lineType: Optional[LineType] = None  # Line type for drawn paths
+    lineWidth: Optional[float] = None  # Line width for drawn paths
 
 class Track(BaseModel):
     name: str
